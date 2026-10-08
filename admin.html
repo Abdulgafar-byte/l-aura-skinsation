@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        L’Aura Skinsation — Admin Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="admin-page">
+
+
+<header class="admin-header">
+
+    <div class="logo">
+
+        L’Aura
+
+        <span>
+            SKINSATION
+        </span>
+
+    </div>
+
+
+    <div class="admin-header-right">
+
+        <span>
+            Admin Dashboard
+        </span>
+
+        <a href="index.html">
+            View Website
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main class="admin-container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="admin-title">
+
+        <span>
+            L’AURA SKINSATION
+        </span>
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+        <p>
+            Manage products, reviews, contact information,
+            payment details and customer orders from one place.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PRODUCTS
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    PRODUCT MANAGEMENT
+                </span>
+
+                <h2>
+                    Add New Product
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="productForm"
+            enctype="multipart/form-data"
+        >
+
+
+            <div class="admin-form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="e.g. Hydrating Face Cream"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Price (₦)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="15000"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="10"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Skin Type
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productSkinType"
+                        placeholder="Dry, Sensitive, Normal"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Skin Concern
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productConcern"
+                        placeholder="Dryness, Dark Spots"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Product Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="productImage"
+                        accept="image/*"
+                    >
+
+                    <small>
+                        Maximum image size: 5MB
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    Product Description
+                </label>
+
+                <textarea
+                    id="productDescription"
+                    rows="5"
+                    placeholder="Describe the product..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="admin-submit"
+            >
+                Add Product
+            </button>
+
+
+            <p
+                id="productMessage"
+                class="admin-message"
+            ></p>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =================================================
+         EXISTING PRODUCTS
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    INVENTORY
+                </span>
+
+                <h2>
+                    Existing Products
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="adminProducts"
+            class="admin-products"
+        >
+
+            Loading products...
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         REVIEWS
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    REVIEWS & RESULTS
+                </span>
+
+                <h2>
+                    Customer Reviews
+                </h2>
+
+                <p>
+                    Add customer testimonials and
+                    before & after results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <form
+            id="reviewForm"
+            enctype="multipart/form-data"
+        >
+
+
+            <div class="admin-form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reviewCustomerName"
+                        placeholder="Customer name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Rating
+                    </label>
+
+                    <select
+                        id="reviewRating"
+                        required
+                    >
+
+                        <option value="">
+                            Select rating
+                        </option>
+
+                        <option value="5">
+                            ★★★★★ — 5 Stars
+                        </option>
+
+                        <option value="4">
+                            ★★★★☆ — 4 Stars
+                        </option>
+
+                        <option value="3">
+                            ★★★☆☆ — 3 Stars
+                        </option>
+
+                        <option value="2">
+                            ★★☆☆☆ — 2 Stars
+                        </option>
+
+                        <option value="1">
+                            ★☆☆☆☆ — 1 Star
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Before Photo
+                    </label>
+
+                    <input
+                        type="file"
+                        id="reviewBeforeImage"
+                        accept="image/*"
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        After Photo
+                    </label>
+
+                    <input
+                        type="file"
+                        id="reviewAfterImage"
+                        accept="image/*"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    Customer Review
+                </label>
+
+                <textarea
+                    id="reviewText"
+                    rows="5"
+                    placeholder="Write the customer's review..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="admin-submit"
+            >
+                Add Review
+            </button>
+
+
+            <p
+                id="reviewMessage"
+                class="admin-message"
+            ></p>
+
+
+        </form>
+
+
+        <div
+            id="adminReviews"
+            class="admin-products"
+        >
+
+            Loading reviews...
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CONTACT & PAYMENT INFORMATION
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    BUSINESS INFORMATION
+                </span>
+
+                <h2>
+                    Contact & Payment Details
+                </h2>
+
+                <p>
+                    Update the information customers see
+                    on the website and during bank transfer checkout.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <form id="contactForm">
+
+
+            <div class="admin-form-grid">
+
+
+                <!-- WHATSAPP -->
+
+                <div class="form-group">
+
+                    <label>
+                        WhatsApp Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactWhatsapp"
+                        placeholder="e.g. 2349046819250"
+                    >
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactPhone"
+                        placeholder="Business phone number"
+                    >
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="contactEmail"
+                        placeholder="business@email.com"
+                    >
+
+                </div>
+
+
+
+                <!-- INSTAGRAM -->
+
+                <div class="form-group">
+
+                    <label>
+                        Instagram
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactInstagram"
+                        placeholder="@l_aura_skinsation"
+                    >
+
+                </div>
+
+
+
+                <!-- TIKTOK -->
+
+                <div class="form-group">
+
+                    <label>
+                        TikTok
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactTiktok"
+                        placeholder="@l_aura_skinsation"
+                    >
+
+                </div>
+
+
+
+                <!-- DELIVERY AREAS -->
+
+                <div class="form-group">
+
+                    <label>
+                        Delivery Areas
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactDeliveryAreas"
+                        placeholder="Ilorin / Lagos / Nationwide Nigeria"
+                    >
+
+                </div>
+
+
+
+                <!-- DELIVERY FEE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Delivery Fee
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactDeliveryFee"
+                        placeholder="Varies by location"
+                    >
+
+                </div>
+
+
+
+                <!-- PAYMENT METHODS -->
+
+                <div class="form-group">
+
+                    <label>
+                        Payment Methods
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactPaymentMethods"
+                        placeholder="Paystack + Bank Transfer"
+                    >
+
+                </div>
+
+
+
+                <!-- RECOMMENDATION FEE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Recommendation Fee
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactRecommendationFee"
+                        placeholder="₦5,000"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- BUSINESS ADDRESS -->
+
+            <div class="form-group">
+
+                <label>
+                    Business Address
+                </label>
+
+                <textarea
+                    id="contactAddress"
+                    rows="3"
+                    placeholder="Kwara State / Lagos State / Nigeria"
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BANK TRANSFER DETAILS
+            ================================================== -->
+
+            <div
+                class="admin-card-header"
+                style="margin-top: 35px;"
+            >
+
+                <div>
+
+                    <span>
+                        BANK TRANSFER
+                    </span>
+
+                    <h2>
+                        Bank Account Details
+                    </h2>
+
+                    <p>
+                        These details will be shown to customers
+                        when they select Bank Transfer at checkout.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="admin-form-grid">
+
+
+                <!-- BANK NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Bank Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactBankName"
+                        placeholder="e.g. Opay, GTBank, Access Bank"
+                    >
+
+                </div>
+
+
+
+                <!-- ACCOUNT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Account Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactAccountName"
+                        placeholder="Account holder's name"
+                    >
+
+                </div>
+
+
+
+                <!-- ACCOUNT NUMBER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Account Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactAccountNumber"
+                        placeholder="10-digit account number"
+                        maxlength="20"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- SAVE BUTTON -->
+
+            <button
+                type="submit"
+                class="admin-submit"
+            >
+                Save Business & Payment Information
+            </button>
+
+
+            <p
+                id="contactMessage"
+                class="admin-message"
+            ></p>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ORDERS
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    CUSTOMER ORDERS
+                </span>
+
+                <h2>
+                    Orders
+                </h2>
+
+                <p>
+                    View customer orders and update
+                    their order status.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="adminOrders"
+            class="admin-products"
+        >
+
+            Loading orders...
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         RECOMMENDATION REQUESTS
+    ================================================== -->
+
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+
+            <div>
+
+                <span>
+                    SKINCARE RECOMMENDATIONS
+                </span>
+
+                <h2>
+                    Recommendation Requests
+                </h2>
+
+                <p>
+                    View customer skin assessments and
+                    manage recommendation requests.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="adminRecommendationRequests"
+            class="admin-products"
+        >
+
+            Loading recommendation requests...
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Checkout | L’Aura Skinsation
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        .checkout-page {
+            min-height: 100vh;
+            padding: 120px 20px 60px;
+        }
+
+        .checkout-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .checkout-header h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .checkout-header p {
+            color: var(--secondary-text);
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 30px;
+        }
+
+        .checkout-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 30px;
+        }
+
+        .checkout-box h2 {
+            color: var(--gold);
+            margin-bottom: 25px;
+        }
+
+        .checkout-form-group {
+            margin-bottom: 18px;
+        }
+
+        .checkout-form-group label {
+            display: block;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .checkout-form-group input,
+        .checkout-form-group textarea {
+            width: 100%;
+            padding: 13px;
+            background: var(--input-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .checkout-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkout-form-group input:focus,
+        .checkout-form-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .payment-section {
+            margin-top: 25px;
+        }
+
+        .payment-section h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .payment-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            cursor: pointer;
+        }
+
+        .payment-option:hover {
+            border-color: var(--gold);
+        }
+
+        .payment-option input {
+            width: auto;
+            accent-color: var(--gold);
+        }
+
+        .payment-option strong {
+            color: var(--text);
+        }
+
+        .payment-option small {
+            display: block;
+            margin-top: 4px;
+            color: var(--secondary-text);
+        }
+
+        .payment-info {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--secondary-text);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .payment-info strong {
+            color: var(--gold);
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .order-item-name {
+            color: var(--text);
+        }
+
+        .order-item-price {
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .checkout-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .checkout-total span:last-child {
+            color: var(--gold);
+        }
+
+        .place-order-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #0D0B0A;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .place-order-btn:hover {
+            opacity: 0.9;
+        }
+
+        .place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 50px 25px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .success-message h2 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: var(--secondary-text);
+            line-height: 1.7;
+        }
+
+        .order-number {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* BANK DETAILS */
+
+        .bank-details-box {
+            margin: 30px auto 0;
+            max-width: 650px;
+            text-align: left;
+            padding: 25px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .bank-details-box h3 {
+            color: var(--gold);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .bank-detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bank-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .bank-detail-label {
+            color: var(--secondary-text);
+        }
+
+        .bank-detail-value {
+            color: var(--text);
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .payment-amount {
+            margin: 20px 0;
+            padding: 18px;
+            border-radius: 10px;
+            background: var(--card);
+            text-align: center;
+        }
+
+        .payment-amount span {
+            display: block;
+            color: var(--secondary-text);
+            margin-bottom: 5px;
+        }
+
+        .payment-amount strong {
+            color: var(--gold);
+            font-size: 25px;
+        }
+
+        .payment-instruction {
+            margin-top: 20px;
+            color: var(--secondary-text);
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .whatsapp-payment-btn {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #0D0B0A;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .whatsapp-payment-btn:hover {
+            opacity: 0.9;
+        }
+
+        .bank-details-loading {
+            color: var(--secondary-text);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .bank-details-missing {
+            color: var(--secondary-text);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .success-note {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--secondary-text);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-box {
+                padding: 20px;
+            }
+
+            .bank-detail-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .bank-detail-value {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="checkout-page">
+
+
+    <div class="checkout-container">
+
+
+        <!-- HEADER -->
+
+        <div class="checkout-header">
+
+            <h1>
+                L’Aura Skinsation
+            </h1>
+
+            <p>
+                Complete your order securely
+            </p>
+
+        </div>
+
+
+
+        <!-- CHECKOUT CONTENT -->
+
+        <div id="checkoutContent">
+
+
+            <div class="checkout-grid">
+
+
+                <!-- CUSTOMER INFORMATION -->
+
+                <div class="checkout-box">
+
+                    <h2>
+                        Delivery Information
+                    </h2>
+
+
+                    <form id="checkoutForm">
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="name">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="address">
+                                Delivery Address
+                            </label>
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="state">
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                id="state"
+                                name="state"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="checkout-form-group">
+
+                            <label for="notes">
+                                Additional Notes (Optional)
+                            </label>
+
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                placeholder="Any special delivery instructions?"
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- PAYMENT -->
+
+                        <div class="payment-section">
+
+                            <h3>
+                                Payment Method
+                            </h3>
+
+
+                            <div class="payment-options">
+
+
+                                <label class="payment-option">
+
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="Paystack"
+                                        checked
+                                    >
+
+                                    <div>
+
+                                        <strong>
+                                            Paystack
+                                        </strong>
+
+                                        <small>
+                                            Pay securely online.
+                                        </small>
+
+                                    </div>
+
+                                </label>
+
+
+
+                                <label class="payment-option">
+
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="Bank Transfer"
+                                    >
+
+                                    <div>
+
+                                        <strong>
+                                            Bank Transfer
+                                        </strong>
+
+                                        <small>
+                                            Pay directly to L’Aura Skinsation's bank account.
+                                        </small>
+
+                                    </div>
+
+                                </label>
+
+
+                            </div>
+
+
+
+                            <div
+                                class="payment-info"
+                                id="paymentInfo"
+                            >
+
+                                <strong>
+                                    Paystack
+                                </strong>
+
+                                <br>
+
+                                Online payment will be connected securely
+                                to L’Aura Skinsation's Paystack account.
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <button
+                            type="submit"
+                            class="place-order-btn"
+                            id="placeOrderButton"
+                        >
+                            Place Order
+                        </button>
+
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- ORDER SUMMARY -->
+
+                <div class="checkout-box">
+
+                    <h2>
+                        Your Order
+                    </h2>
+
+
+                    <div id="checkoutItems"></div>
+
+
+                    <div class="checkout-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span id="checkoutTotal">
+                            ₦0
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="payment-info"
+                        id="bankTransferMessage"
+                        style="display: none;"
+                    >
+
+                        <strong>
+                            Bank Transfer
+                        </strong>
+
+                        <br>
+
+                        After placing your order,
+                        your bank account details will be
+                        displayed on the confirmation page.
+
+                    </div>
+
+
+                    <a
+                        href="index.html"
+                        class="continue-shopping"
+                    >
+                        ← Continue Shopping
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+            class="success-message"
+            id="successMessage"
+        >
+
+            <h2>
+                Order Received 🎉
+            </h2>
+
+
+            <p>
+                Thank you for shopping with
+                L’Aura Skinsation.
+            </p>
+
+
+            <p>
+                Your order number is:
+
+                <span
+                    class="order-number"
+                    id="orderNumber"
+                ></span>
+            </p>
+
+
+            <p id="successPaymentMessage"></p>
+
+
+            <!-- BANK DETAILS -->
+
+            <div
+                class="bank-details-box"
+                id="bankDetailsBox"
+                style="display: none;"
+            >
+
+                <h3>
+                    Make Your Bank Transfer
+                </h3>
+
+
+                <div
+                    id="bankDetailsContent"
+                >
+
+                    <div class="bank-details-loading">
+                        Loading bank details...
+                    </div>
+
+                </div>
+
+
+                <div class="payment-instruction">
+
+                    After making the transfer,
+                    please send your payment proof
+                    together with your order number
+                    to L’Aura Skinsation on WhatsApp.
+
+                </div>
+
+
+                <a
+                    href="#"
+                    id="whatsappPaymentButton"
+                    class="whatsapp-payment-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Send Payment Proof on WhatsApp
+                </a>
+
+
+                <div class="success-note">
+
+                    <strong>
+                        Important:
+                    </strong>
+
+                    Your order has been received.
+                    Your order will be processed after
+                    L’Aura Skinsation confirms your payment.
+
+                </div>
+
+            </div>
+
+
+
+            <a
+                href="index.html"
+                class="continue-shopping"
+            >
+                Continue Shopping
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "http://localhost:3000";
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const checkoutItems =
+    document.getElementById(
+        "checkoutItems"
+    );
+
+const checkoutTotal =
+    document.getElementById(
+        "checkoutTotal"
+    );
+
+const checkoutForm =
+    document.getElementById(
+        "checkoutForm"
+    );
+
+const placeOrderButton =
+    document.getElementById(
+        "placeOrderButton"
+    );
+
+const checkoutContent =
+    document.getElementById(
+        "checkoutContent"
+    );
+
+const successMessage =
+    document.getElementById(
+        "successMessage"
+    );
+
+const orderNumber =
+    document.getElementById(
+        "orderNumber"
+    );
+
+const paymentInfo =
+    document.getElementById(
+        "paymentInfo"
+    );
+
+const bankTransferMessage =
+    document.getElementById(
+        "bankTransferMessage"
+    );
+
+const successPaymentMessage =
+    document.getElementById(
+        "successPaymentMessage"
+    );
+
+const bankDetailsBox =
+    document.getElementById(
+        "bankDetailsBox"
+    );
+
+const bankDetailsContent =
+    document.getElementById(
+        "bankDetailsContent"
+    );
+
+const whatsappPaymentButton =
+    document.getElementById(
+        "whatsappPaymentButton"
+    );
+
+
+
+/* =====================================================
+   GET CART
+===================================================== */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem(
+            "lAuraCart"
+        )
+    ) || [];
+
+
+
+/* =====================================================
+   DISPLAY CART
+===================================================== */
+
+function displayCart() {
+
+    checkoutItems.innerHTML = "";
+
+    if (cart.length === 0) {
+
+        checkoutItems.innerHTML = `
+            <p style="color: var(--secondary-text);">
+                Your cart is empty.
+            </p>
+        `;
+
+        placeOrderButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    cart.forEach(item => {
+
+        const itemTotal =
+            Number(item.price) *
+            Number(item.quantity);
+
+
+        total += itemTotal;
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "order-item";
+
+
+        div.innerHTML = `
+
+            <div class="order-item-name">
+
+                ${item.name}
+
+                <br>
+
+                <small>
+                    Quantity: ${item.quantity}
+                </small>
+
+            </div>
+
+            <div class="order-item-price">
+
+                ₦${itemTotal.toLocaleString()}
+
+            </div>
+
+        `;
+
+
+        checkoutItems.appendChild(
+            div
+        );
+
+    });
+
+
+    checkoutTotal.textContent =
+        `₦${total.toLocaleString()}`;
+
+}
+
+
+displayCart();
+
+
+
+/* =====================================================
+   CALCULATE TOTAL
+===================================================== */
+
+function getCartTotal() {
+
+    return cart.reduce(
+        (sum, item) => {
+
+            return sum +
+                (
+                    Number(item.price) *
+                    Number(item.quantity)
+                );
+
+        },
+        0
+    );
+
+}
+
+
+
+/* =====================================================
+   PAYMENT METHOD DISPLAY
+===================================================== */
+
+document
+    .querySelectorAll(
+        'input[name="paymentMethod"]'
+    )
+    .forEach(radio => {
+
+        radio.addEventListener(
+            "change",
+            function() {
+
+                if (
+                    this.value ===
+                    "Bank Transfer"
+                ) {
+
+                    paymentInfo.innerHTML = `
+
+                        <strong>
+                            Bank Transfer
+                        </strong>
+
+                        <br>
+
+                        Your order will be recorded first.
+                        Your bank transfer details will be
+                        displayed immediately after placing
+                        your order.
+
+                    `;
+
+                    bankTransferMessage.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    paymentInfo.innerHTML = `
+
+                        <strong>
+                            Paystack
+                        </strong>
+
+                        <br>
+
+                        Online payment will be connected
+                        securely to L’Aura Skinsation's
+                        Paystack account.
+
+                    `;
+
+                    bankTransferMessage.style.display =
+                        "none";
+
+                }
+
+            }
+
+        );
+
+    });
+
+
+
+/* =====================================================
+   GET BANK DETAILS
+===================================================== */
+
+async function getBankDetails() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/contact`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not load bank details."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         The backend may return the contact
+         object directly or inside data.contact.
+        */
+
+        return (
+            data.contact ||
+            data
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "BANK DETAILS ERROR:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   DISPLAY BANK DETAILS
+===================================================== */
+
+async function showBankDetails(
+    total,
+    customerName,
+    orderId
+) {
+
+    bankDetailsBox.style.display =
+        "block";
+
+
+    bankDetailsContent.innerHTML = `
+
+        <div class="bank-details-loading">
+            Loading bank details...
+        </div>
+
+    `;
+
+
+    const contact =
+        await getBankDetails();
+
+
+    if (
+        !contact ||
+        (
+            !contact.bank_name &&
+            !contact.account_name &&
+            !contact.account_number
+        )
+    ) {
+
+        bankDetailsContent.innerHTML = `
+
+            <div class="bank-details-missing">
+
+                Bank transfer details are not available
+                yet.
+
+                <br><br>
+
+                Please contact L’Aura Skinsation
+                on WhatsApp for payment instructions.
+
+            </div>
+
+        `;
+
+    }
+
+    else {
+
+        bankDetailsContent.innerHTML = `
+
+            <div class="bank-detail-row">
+
+                <span class="bank-detail-label">
+                    Bank Name
+                </span>
+
+                <span class="bank-detail-value">
+                    ${
+                        contact.bank_name ||
+                        "Not provided"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="bank-detail-row">
+
+                <span class="bank-detail-label">
+                    Account Name
+                </span>
+
+                <span class="bank-detail-value">
+                    ${
+                        contact.account_name ||
+                        "Not provided"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="bank-detail-row">
+
+                <span class="bank-detail-label">
+                    Account Number
+                </span>
+
+                <span class="bank-detail-value">
+                    ${
+                        contact.account_number ||
+                        "Not provided"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="payment-amount">
+
+                <span>
+                    Amount to Pay
+                </span>
+
+                <strong>
+                    ₦${Number(total).toLocaleString()}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+
+    /* =================================================
+       WHATSAPP PAYMENT PROOF
+    ================================================= */
+
+    const whatsappNumber =
+        contact &&
+        contact.whatsapp
+            ? String(
+                contact.whatsapp
+            ).replace(
+                /\D/g,
+                ""
+            )
+            : "2349046819250";
+
+
+    const message =
+        `Hello L’Aura Skinsation.%0A%0AI have made a bank transfer for my order.%0A%0AOrder Number: #${orderId}%0AAmount: ₦${Number(total).toLocaleString()}%0AName: ${customerName}%0A%0AI am sending my payment proof here.`;
+
+
+    whatsappPaymentButton.href =
+        `https://wa.me/${whatsappNumber}?text=${message}`;
+
+}
+
+
+
+/* =====================================================
+   SUBMIT ORDER
+===================================================== */
+
+checkoutForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        if (cart.length === 0) {
+
+            alert(
+                "Your cart is empty."
+            );
+
+            return;
+
+        }
+
+
+        const selectedPayment =
+            document.querySelector(
+                'input[name="paymentMethod"]:checked'
+            ).value;
+
+
+        placeOrderButton.disabled =
+            true;
+
+
+        placeOrderButton.textContent =
+            "Processing Order...";
+
+
+        const formData =
+            new FormData(
+                checkoutForm
+            );
+
+
+        const total =
+            getCartTotal();
+
+
+        const paymentStatus =
+            selectedPayment ===
+            "Bank Transfer"
+                ? "Awaiting Transfer"
+                : "Pending";
+
+
+        const orderData = {
+
+            name:
+                formData.get(
+                    "name"
+                ),
+
+            email:
+                formData.get(
+                    "email"
+                ),
+
+            phone:
+                formData.get(
+                    "phone"
+                ),
+
+            address:
+                formData.get(
+                    "address"
+                ),
+
+            city:
+                formData.get(
+                    "city"
+                ),
+
+            state:
+                formData.get(
+                    "state"
+                ),
+
+            notes:
+                formData.get(
+                    "notes"
+                ),
+
+            items:
+                cart,
+
+            total:
+                total,
+
+            payment_method:
+                selectedPayment,
+
+            payment_status:
+                paymentStatus,
+
+            payment_reference:
+                ""
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/api/orders`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                orderData
+                            )
+
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message ||
+                    "Order could not be submitted."
+                );
+
+            }
+
+
+            /* =========================================
+               SAVE CUSTOMER NAME BEFORE CLEARING
+            ========================================= */
+
+            const customerName =
+                formData.get(
+                    "name"
+                );
+
+
+            /* =========================================
+               CLEAR CART
+            ========================================= */
+
+            localStorage.removeItem(
+                "lAuraCart"
+            );
+
+
+            /* =========================================
+               SHOW SUCCESS
+            ========================================= */
+
+            checkoutContent.style.display =
+                "none";
+
+
+            successMessage.style.display =
+                "block";
+
+
+            orderNumber.textContent =
+                `#${result.order.id}`;
+
+
+            /* =========================================
+               BANK TRANSFER
+            ========================================= */
+
+            if (
+                selectedPayment ===
+                "Bank Transfer"
+            ) {
+
+                successPaymentMessage.innerHTML = `
+
+                    <strong>
+                        Payment Method: Bank Transfer
+                    </strong>
+
+                    <br><br>
+
+                    Your order has been received.
+                    Please make your transfer using
+                    the account details below.
+
+                `;
+
+
+                await showBankDetails(
+                    total,
+                    customerName,
+                    result.order.id
+                );
+
+            }
+
+
+            /* =========================================
+               PAYSTACK
+            ========================================= */
+
+            else {
+
+                successPaymentMessage.innerHTML = `
+
+                    <strong>
+                        Payment Method: Paystack
+                    </strong>
+
+                    <br><br>
+
+                    Your order has been received.
+                    Online payment will be connected
+                    in the next step.
+
+                `;
+
+            }
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "CHECKOUT ERROR:",
+                error
+            );
+
+
+            alert(
+                error.message ||
+                "We could not submit your order. Please make sure the L’Aura backend is running."
+            );
+
+
+            placeOrderButton.disabled =
+                false;
+
+
+            placeOrderButton.textContent =
+                "Place Order";
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
