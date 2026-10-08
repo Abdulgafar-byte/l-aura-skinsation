@@ -204,21 +204,18 @@ function renderReviews(reviews) {
             "★".repeat(rating) +
             "☆".repeat(5 - rating);
 
-
-        // BEFORE IMAGE
-        const beforeImage =
-            review.before_image
-                ? https://l-aura-skinsation.onrender.com${review.before_image}
-                : "";
-
-
-        // AFTER IMAGE
-        const afterImage =
-            review.after_image
-                ? https://l-aura-skinsation.onrender.com${review.after_image}
-                : "";
+// BEFORE IMAGE
+const beforeImage =
+    review.before_image
+        ? `https://l-aura-skinsation.onrender.com${review.before_image}`
+        : "";
 
 
+// AFTER IMAGE
+const afterImage =
+    review.after_image
+        ? `https://l-aura-skinsation.onrender.com${review.after_image}`
+        : "";
         reviewCard.innerHTML = `
 
             <div class="review-stars">
