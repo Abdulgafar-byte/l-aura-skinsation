@@ -3,7 +3,7 @@
 // Main Website JavaScript
 // =====================================================
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://l-aura-skinsation.onrender.com/api";
 
 let products = [];
 let selectedProduct = null;
@@ -71,7 +71,7 @@ function renderProducts() {
                     product.image
                     ? `
                         <img
-                            src="http://localhost:3000${product.image}"
+                            https://l-aura-skinsation.onrender.com${product.image}
                             alt="${product.name}"
                         >
                     `
@@ -208,14 +208,14 @@ function renderReviews(reviews) {
         // BEFORE IMAGE
         const beforeImage =
             review.before_image
-                ? `http://localhost:3000${review.before_image}`
+                ? https://l-aura-skinsation.onrender.com${review.before_image}
                 : "";
 
 
         // AFTER IMAGE
         const afterImage =
             review.after_image
-                ? `http://localhost:3000${review.after_image}`
+                ? https://l-aura-skinsation.onrender.com${review.after_image}
                 : "";
 
 
