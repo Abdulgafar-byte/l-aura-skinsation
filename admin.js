@@ -1,4 +1,4 @@
-const API_URL = "https://l-aura-skinsation.onrender.com";
+const API_URL = "https://l-aura-skinsation.onrender.com/api";
 
 
 /* =====================================================
@@ -118,7 +118,7 @@ function renderAdminProducts(products) {
             product.image
                 ? `
                     <img
-                        src="http://localhost:3000${product.image}"
+                        src="https://l-aura-skinsation.onrender.com${product.image}"
                         alt="${escapeHtml(product.name)}"
                         class="admin-product-image"
                     >
@@ -570,7 +570,7 @@ function renderAdminReviews(reviews) {
             review.before_image
                 ? `
                     <img
-                        src="http://localhost:3000${review.before_image}"
+                        src="https://l-aura-skinsation.onrender.com${review.before_image}"
                         alt="Before"
                         class="admin-review-image"
                     >
@@ -582,7 +582,7 @@ function renderAdminReviews(reviews) {
             review.after_image
                 ? `
                     <img
-                        src="http://localhost:3000${review.after_image}"
+                        src="https://l-aura-skinsation.onrender.com${review.after_image}"
                         alt="After"
                         class="admin-review-image"
                     >
