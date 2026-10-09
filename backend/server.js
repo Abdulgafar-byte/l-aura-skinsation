@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Database = require("better-sqlite3");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
+const { createClient } = require("@supabase/supabase-js");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -29,7 +30,91 @@ app.use(
 const db = new Database(
     path.join(__dirname, "l-aura.db")
 );
+/* =====================================================
+   SUPABASE STORAGE CONNECTION
+===================================================== */
 
+const supabase =
+    process.env.SUPABASE_URL &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+        ? createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_SERVICE_ROLE_KEY
+        )
+        : null;
+
+
+/* =====================================================
+   UPLOAD IMAGE TO SUPABASE
+===================================================== */
+
+async function uploadImageToSupabase(file, folder) {
+
+    if (!file) {
+        return "";
+    }
+
+    // Keep local uploads working if Supabase is not configured.
+    if (!supabase) {
+        return "/uploads/" + file.filename;
+    }
+    
+    try {
+
+        const extension =
+            path.extname(file.originalname) || ".jpg";
+
+        const uniqueFilename =
+            Date.now() +
+            "-" +
+            Math.round(Math.random() * 1e9) +
+            extension;
+
+        const storagePath =
+            folder + "/" + uniqueFilename;
+
+        const fileBuffer =
+            fs.readFileSync(file.path);
+
+        const { error } =
+            await supabase.storage
+                .from("product-images")
+                .upload(
+                    storagePath,
+                    fileBuffer,
+                    {
+                        contentType: file.mimetype,
+                        upsert: false
+                    }
+                );
+
+        if (error) {
+            throw error;
+        }
+
+        const { data } =
+            supabase.storage
+                .from("product-images")
+                .getPublicUrl(storagePath);
+
+        // Remove the temporary local file after a successful upload.
+        if (fs.existsSync(file.path)) {
+            fs.unlinkSync(file.path);
+        }
+
+        return data.publicUrl;
+
+    } catch (error) {
+
+        console.error(
+            "SUPABASE IMAGE UPLOAD ERROR:",
+            error.message
+        );
+
+        throw error;
+
+    }
+}
 
 /* =====================================================
    UPLOADS FOLDER
@@ -1051,7 +1136,7 @@ app.get(
 app.post(
     "/api/products",
     upload.single("image"),
-    (req, res) => {
+    async (req, res) => {
 
         try {
 
@@ -1144,13 +1229,13 @@ app.post(
 
             let imagePath = "";
 
+               if (req.file) {
 
-            if (req.file) {
-
-                imagePath =
-                    "/uploads/" +
-                    req.file.filename;
-
+              imagePath = await uploadImageToSupabase(
+              req.file,
+             "products"
+                  );
+ 
             }
 
 
@@ -1257,7 +1342,7 @@ app.post(
 app.put(
     "/api/products/:id",
     upload.single("image"),
-    (req, res) => {
+    async (req, res) => {
 
         try {
 
@@ -1330,47 +1415,34 @@ app.put(
             }
 
 
-            let imagePath =
-                existingProduct.image || "";
+           let imagePath =
+    existingProduct.image || "";
 
+if (req.file) {
 
-            if (req.file) {
+    imagePath = await uploadImageToSupabase(
+        req.file,
+        "products"
+    );
 
-                imagePath =
-                    "/uploads/" +
-                    req.file.filename;
+    // Remove the previous image only if it was stored locally.
+    if (
+        existingProduct.image &&
+        existingProduct.image.startsWith("/uploads/")
+    ) {
 
+        const oldImagePath = path.join(
+            __dirname,
+            existingProduct.image
+        );
 
-                if (
-                    existingProduct.image &&
-                    existingProduct.image.startsWith(
-                        "/uploads/"
-                    )
-                ) {
+        if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+        }
 
-                    const oldImagePath =
-                        path.join(
-                            __dirname,
-                            existingProduct.image
-                        );
+    }
 
-
-                    if (
-                        fs.existsSync(
-                            oldImagePath
-                        )
-                    ) {
-
-                        fs.unlinkSync(
-                            oldImagePath
-                        );
-
-                    }
-
-                }
-
-            }
-
+}
 
             db.prepare(`
                 UPDATE products
@@ -1664,7 +1736,7 @@ app.post(
             maxCount: 1
         }
     ]),
-    (req, res) => {
+     async (req, res) => {
 
         try {
 
@@ -1697,36 +1769,36 @@ app.post(
             }
 
 
-            let beforeImage = "";
+           let beforeImage = "";
+           let afterImage = "";
 
-            let afterImage = "";
+           // Upload BEFORE image to Supabase
+           if (
+         req.files &&
+          req.files.beforeImage &&
+        req.files.beforeImage[0]
+) {
 
+         beforeImage = await uploadImageToSupabase(
+         req.files.beforeImage[0],
+        "reviews/before"
+    );
 
-            if (
-                req.files &&
-                req.files.beforeImage &&
-                req.files.beforeImage[0]
-            ) {
+}
 
-                beforeImage =
-                    "/uploads/" +
-                    req.files.beforeImage[0].filename;
+// Upload AFTER image to Supabase
+if (
+    req.files &&
+    req.files.afterImage &&
+    req.files.afterImage[0]
+) {
 
-            }
+    afterImage = await uploadImageToSupabase(
+        req.files.afterImage[0],
+        "reviews/after"
+    );
 
-
-            if (
-                req.files &&
-                req.files.afterImage &&
-                req.files.afterImage[0]
-            ) {
-
-                afterImage =
-                    "/uploads/" +
-                    req.files.afterImage[0].filename;
-
-            }
-
+}
 
             const result =
                 db.prepare(`

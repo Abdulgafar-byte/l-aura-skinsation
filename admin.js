@@ -1,5 +1,22 @@
 const API_URL = "https://l-aura-skinsation.onrender.com/api";
+// =====================================================
+// IMAGE URL HELPER — RENDER + SUPABASE
+// =====================================================
 
+function getImageUrl(imagePath) {
+    if (!imagePath) {
+        return "";
+    }
+
+    if (
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("http://")
+    ) {
+        return imagePath;
+    }
+
+    return `https://l-aura-skinsation.onrender.com${imagePath}`;
+}
 
 /* =====================================================
    HELPER FUNCTIONS
@@ -118,7 +135,7 @@ function renderAdminProducts(products) {
             product.image
                 ? `
                     <img
-                        src="https://l-aura-skinsation.onrender.com${product.image}"
+                        src="${getImageUrl(product.image)}"
                         alt="${escapeHtml(product.name)}"
                         class="admin-product-image"
                     >
@@ -570,7 +587,7 @@ function renderAdminReviews(reviews) {
             review.before_image
                 ? `
                     <img
-                        src="https://l-aura-skinsation.onrender.com${review.before_image}"
+                        src="${getImageUrl(review.before_image)}"
                         alt="Before"
                         class="admin-review-image"
                     >
@@ -582,7 +599,7 @@ function renderAdminReviews(reviews) {
             review.after_image
                 ? `
                     <img
-                        src="https://l-aura-skinsation.onrender.com${review.after_image}"
+                        src="${getImageUrl(review.after_image)}"
                         alt="After"
                         class="admin-review-image"
                     >

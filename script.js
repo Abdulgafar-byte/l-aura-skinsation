@@ -4,7 +4,26 @@
 // =====================================================
 
 const API_URL = "https://l-aura-skinsation.onrender.com/api";
+// =====================================================
+// IMAGE URL HELPER — RENDER + SUPABASE
+// =====================================================
 
+function getImageUrl(imagePath) {
+    if (!imagePath) {
+        return "";
+    }
+
+    // Supabase and other complete image URLs
+    if (
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("http://")
+    ) {
+        return imagePath;
+    }
+
+    // Existing images stored on the Render backend
+    return `https://l-aura-skinsation.onrender.com${imagePath}`;
+}
 let products = [];
 let selectedProduct = null;
 
@@ -71,9 +90,10 @@ function renderProducts() {
                     product.image
                     ? `
                         <img
-                            https://l-aura-skinsation.onrender.com${product.image}
-                            alt="${product.name}"
-                        >
+                         src="${getImageUrl(product.image)}"
+                         alt="${product.name}"
+                         loading="lazy"
+                         >
                     `
                     : `
                         <div class="product-image-placeholder">
@@ -207,14 +227,14 @@ function renderReviews(reviews) {
 // BEFORE IMAGE
 const beforeImage =
     review.before_image
-        ? `https://l-aura-skinsation.onrender.com${review.before_image}`
+        ? getImageUrl(review.before_image)
         : "";
 
 
 // AFTER IMAGE
 const afterImage =
     review.after_image
-        ? `https://l-aura-skinsation.onrender.com${review.after_image}`
+        ? getImageUrl(review.after_image)
         : "";
         reviewCard.innerHTML = `
 
@@ -330,10 +350,8 @@ const modalProductImage =
 if (modalProductImage) {
 
     if (product.image) {
-
         modalProductImage.src =
-            `http://localhost:3000${product.image}`;
-
+        getImageUrl(product.image);
         modalProductImage.alt =
             product.name;
 
