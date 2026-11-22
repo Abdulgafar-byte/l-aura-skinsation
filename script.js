@@ -3,7 +3,12 @@
 // Main Website JavaScript
 // =====================================================
 
-const API_URL = "https://l-aura-skinsation.onrender.com/api";
+const API_HOST =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:3000"
+        : "https://l-aura-skinsation.onrender.com";
+const API_URL = `${API_HOST}/api`;
 // =====================================================
 // IMAGE URL HELPER — RENDER + SUPABASE
 // =====================================================
@@ -21,9 +26,33 @@ function getImageUrl(imagePath) {
         return imagePath;
     }
 
-    // Existing images stored on the Render backend
-    return `https://l-aura-skinsation.onrender.com${imagePath}`;
+    // Existing images stored on the backend
+    return `${API_HOST}${imagePath}`;
 }
+async function apiFetch(url, options, attempts = 4) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= attempts; attempt += 1) {
+        try {
+            const response = await fetch(url, options);
+
+            if (response.ok) {
+                return response;
+            }
+
+            lastError = new Error(`Request failed with status ${response.status}`);
+        } catch (error) {
+            lastError = error;
+        }
+
+        if (attempt < attempts) {
+            await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+        }
+    }
+
+    throw lastError;
+}
+
 let products = [];
 let selectedProduct = null;
 
@@ -34,7 +63,7 @@ let selectedProduct = null;
 
 async function loadProducts() {
     try {
-        const response = await fetch(`${API_URL}/products`);
+        const response = await apiFetch(`${API_URL}/products`);
         const data = await response.json();
 
         if (!data.success) {
@@ -143,7 +172,7 @@ async function loadReviews() {
     try {
 
         const response =
-            await fetch(`${API_URL}/reviews`);
+            await apiFetch(`${API_URL}/reviews`);
 
         const data =
             await response.json();
@@ -981,7 +1010,7 @@ if (skinAssessmentForm) {
             try {
 
                 const response =
-                    await fetch(
+                    await apiFetch(
                         `${API_URL}/recommendation-requests`,
                         {
 

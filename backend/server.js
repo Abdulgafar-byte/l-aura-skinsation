@@ -22,6 +22,15 @@ app.use(
     })
 );
 
+app.get("/api/health", (_req, res) => {
+    res.status(200).json({
+        success: true,
+        status: "ok",
+        service: "L'Aura backend",
+        timestamp: new Date().toISOString()
+    });
+});
+
 
 /* =====================================================
    DATABASE

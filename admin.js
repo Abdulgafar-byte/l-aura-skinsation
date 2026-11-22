@@ -1,4 +1,9 @@
-const API_URL = "https://l-aura-skinsation.onrender.com/api";
+const API_HOST =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:3000"
+        : "https://l-aura-skinsation.onrender.com";
+const API_URL = `${API_HOST}/api`;
 // =====================================================
 // IMAGE URL HELPER — RENDER + SUPABASE
 // =====================================================
